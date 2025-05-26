@@ -7,7 +7,6 @@ import { ProductView } from './pages/ProductView';
 import { Cart } from './pages/Cart';
 import { About } from './pages/About';
 
-
 function App() {
   
   const [searchTerm, setSearchTerm] = useState("");
