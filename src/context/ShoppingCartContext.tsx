@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 type ShoppingCartProviderProps = {
     children: React.ReactNode;
@@ -26,8 +26,19 @@ export function useShoppingCart() {
 
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
 
-    const[cartItems, setCartItems] = useState<CartItem[]>([])
+    const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+        try {
+            const stored = window.localStorage.getItem("shopping-cart");
+            return stored ? JSON.parse(stored) as CartItem[] : [];
+        } catch {
+            return [];
+        }
+    });
     const cartQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+    useEffect(() => {
+        window.localStorage.setItem("shopping-cart", JSON.stringify(cartItems));
+    }, [cartItems]);
 
     function getItemQtd(sku: string) {
         return cartItems.find(item => item.sku === sku)?.quantity || 0;

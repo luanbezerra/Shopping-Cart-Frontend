@@ -9,9 +9,11 @@ export const storeItems = rawItems.map(item => ({
 
 interface StoreProps {
     searchTerm: string;
+    termFilter: string;
+    sectionFilter: string;
 }
 
-export function Store( { searchTerm }: StoreProps) {
+export function Store( { searchTerm, termFilter, sectionFilter }: StoreProps) {
     const [displayItems, setDisplayItems] = useState(storeItems);
 
     useEffect(() => {
@@ -19,14 +21,20 @@ export function Store( { searchTerm }: StoreProps) {
             const q = searchTerm.toLowerCase();
             setDisplayItems(
                 storeItems.filter(item => 
+                    (
                     item.name.toLowerCase().includes(q) ||
                     item.description.toLowerCase().includes(q) ||
                     item.terms.toLowerCase().includes(q)
+                    )
+                    && (termFilter === "" || item.terms === termFilter)
+                    // filtra por sectionFilter
+                    && (sectionFilter === "" || item.section === sectionFilter)
                 )
+                
             );
         }, 100);
         return () => clearTimeout(timer);
-    }, [searchTerm]);
+    }, [searchTerm, termFilter, sectionFilter]);
 
     return (
         <>
