@@ -1,4 +1,3 @@
-// src/pages/Checkout.tsx
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +33,6 @@ export function Checkout() {
     defaultValues: { country: "Brasil" },
   });
 
-  // formatação e lookup CEP
   const cepVal = watch("cep") || "";
   const formatCep = (v: string) => {
     const d = v.replace(/\D/g, "").slice(0, 8);
@@ -56,7 +54,6 @@ export function Checkout() {
     }
   };
 
-  // formatação MM/AA
   const expiryVal = watch("expiry") || "";
   const formatExpiry = (v: string) => {
     const d = v.replace(/\D/g, "").slice(0, 4);
@@ -64,7 +61,6 @@ export function Checkout() {
   };
 
   const onSubmit = (_data: CheckoutFormData) => {
-    // em vez de enviar, mostra modal de sucesso
     setShowSuccess(true);
   };
 
@@ -73,22 +69,33 @@ export function Checkout() {
       <h1 className="text-3xl font-bold mb-6">Finalizar Compra</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        {/* Nome completo */}
         <div>
-          <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="fullName"
+            className="block text-sm font-medium text-gray-700"
+          >
             Nome completo
           </label>
           <input
             id="fullName"
-            {...register("fullName", { required: "Obrigatório", minLength: { value: 2, message: "Mínimo 2 caracteres" } })}
+            {...register("fullName", {
+              required: "Obrigatório",
+              minLength: { value: 2, message: "Mínimo 2 caracteres" },
+            })}
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-black"
           />
-          {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
+          {errors.fullName && (
+            <p className="text-red-500 text-xs mt-1">
+              {errors.fullName.message}
+            </p>
+          )}
         </div>
 
-        {/* E-mail */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
             E-mail
           </label>
           <input
@@ -100,13 +107,19 @@ export function Checkout() {
             })}
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-black"
           />
-          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+          {errors.email && (
+            <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+          )}
         </div>
 
-        {/* CEP, Rua, Número, Complemento, Bairro */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="sm:col-span-3">
-            <label htmlFor="cep" className="block text-sm font-medium text-gray-700">CEP</label>
+            <label
+              htmlFor="cep"
+              className="block text-sm font-medium text-gray-700"
+            >
+              CEP
+            </label>
             <input
               id="cep"
               placeholder="00000-000"
@@ -114,32 +127,57 @@ export function Checkout() {
                 required: "Obrigatório",
                 pattern: { value: /^\d{5}-\d{3}$/, message: "CEP inválido" },
               })}
-              onChange={e => setValue("cep", formatCep(e.target.value))}
+              onChange={(e) => setValue("cep", formatCep(e.target.value))}
               onBlur={handleCepBlur}
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-black"
             />
-            {errors.cep && <p className="text-red-500 text-xs mt-1">{errors.cep.message}</p>}
+            {errors.cep && (
+              <p className="text-red-500 text-xs mt-1">{errors.cep.message}</p>
+            )}
           </div>
           <div className="sm:col-span-2">
-            <label htmlFor="address" className="block text-sm font-medium text-gray-700">Rua</label>
+            <label
+              htmlFor="address"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Rua
+            </label>
             <input
               id="address"
               {...register("address", { required: "Obrigatório" })}
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-black"
             />
-            {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address.message}</p>}
+            {errors.address && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.address.message}
+              </p>
+            )}
           </div>
           <div>
-            <label htmlFor="number" className="block text-sm font-medium text-gray-700">Número</label>
+            <label
+              htmlFor="number"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Número
+            </label>
             <input
               id="number"
               {...register("number", { required: "Obrigatório" })}
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-black"
             />
-            {errors.number && <p className="text-red-500 text-xs mt-1">{errors.number.message}</p>}
+            {errors.number && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.number.message}
+              </p>
+            )}
           </div>
           <div className="sm:col-span-3">
-            <label htmlFor="complement" className="block text-sm font-medium text-gray-700">Complemento (opcional)</label>
+            <label
+              htmlFor="complement"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Complemento (opcional)
+            </label>
             <input
               id="complement"
               {...register("complement")}
@@ -147,7 +185,12 @@ export function Checkout() {
             />
           </div>
           <div className="sm:col-span-3">
-            <label htmlFor="neighborhood" className="block text-sm font-medium text-gray-700">Bairro (opcional)</label>
+            <label
+              htmlFor="neighborhood"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Bairro (opcional)
+            </label>
             <input
               id="neighborhood"
               {...register("neighborhood")}
@@ -156,31 +199,50 @@ export function Checkout() {
           </div>
         </div>
 
-        {/* Cidade / Estado / País */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="city" className="block text-sm font-medium text-gray-700">Cidade</label>
+            <label
+              htmlFor="city"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Cidade
+            </label>
             <input
               id="city"
               {...register("city", { required: "Obrigatório" })}
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-black"
             />
-            {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city.message}</p>}
+            {errors.city && (
+              <p className="text-red-500 text-xs mt-1">{errors.city.message}</p>
+            )}
           </div>
           <div>
-            <label htmlFor="state" className="block text-sm font-medium text-gray-700">Estado</label>
+            <label
+              htmlFor="state"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Estado
+            </label>
             <input
               id="state"
               {...register("state", { required: "Obrigatório" })}
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-black"
             />
-            {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state.message}</p>}
+            {errors.state && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.state.message}
+              </p>
+            )}
           </div>
         </div>
 
-        {/* País fixo */}
         <div>
-          <label htmlFor="country" className="block text-sm font-medium text-gray-700">País</label>
+          <label
+            htmlFor="country"
+            className="block text-sm font-medium text-gray-700"
+          >
+            País
+          </label>
           <input
             id="country"
             disabled
@@ -189,52 +251,78 @@ export function Checkout() {
           />
         </div>
 
-        {/* Pagamento */}
         <div>
-          <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700">Número do cartão</label>
+          <label
+            htmlFor="cardNumber"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Número do cartão
+          </label>
           <input
             id="cardNumber"
             inputMode="numeric"
             {...register("cardNumber", {
               required: "Obrigatório",
-              pattern: { value: /^\d{16}$/, message: "Deve ter 16 dígitos" }
+              pattern: { value: /^\d{16}$/, message: "Deve ter 16 dígitos" },
             })}
             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-black"
           />
-          {errors.cardNumber && <p className="text-red-500 text-xs mt-1">{errors.cardNumber.message}</p>}
+          {errors.cardNumber && (
+            <p className="text-red-500 text-xs mt-1">
+              {errors.cardNumber.message}
+            </p>
+          )}
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label htmlFor="expiry" className="block text-sm font-medium text-gray-700">Validade (MM/AA)</label>
+            <label
+              htmlFor="expiry"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Validade (MM/AA)
+            </label>
             <input
               id="expiry"
               placeholder="MM/AA"
               {...register("expiry", {
                 required: "Obrigatório",
-                pattern: { value: /^(0[1-9]|1[0-2])\/\d{2}$/, message: "Formato inválido" }
+                pattern: {
+                  value: /^(0[1-9]|1[0-2])\/\d{2}$/,
+                  message: "Formato inválido",
+                },
               })}
-              onChange={e => setValue("expiry", formatExpiry(e.target.value))}
+              onChange={(e) => setValue("expiry", formatExpiry(e.target.value))}
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-black"
             />
-            {errors.expiry && <p className="text-red-500 text-xs mt-1">{errors.expiry.message}</p>}
+            {errors.expiry && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.expiry.message}
+              </p>
+            )}
           </div>
           <div>
-            <label htmlFor="cvv" className="block text-sm font-medium text-gray-700">CVV</label>
+            <label
+              htmlFor="cvv"
+              className="block text-sm font-medium text-gray-700"
+            >
+              CVV
+            </label>
             <input
               id="cvv"
               inputMode="numeric"
               {...register("cvv", {
                 required: "Obrigatório",
-                pattern: { value: /^\d{3}$/, message: "3 dígitos" }
+                pattern: { value: /^\d{3}$/, message: "3 dígitos" },
               })}
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-black"
             />
-            {errors.cvv && <p className="text-red-500 text-xs mt-1">{errors.cvv.message}</p>}
+            {errors.cvv && (
+              <p className="text-red-500 text-xs mt-1">{errors.cvv.message}</p>
+            )}
           </div>
         </div>
 
-        {/* Submit */}
         <div>
           <button
             type="submit"
@@ -252,12 +340,14 @@ export function Checkout() {
         </div>
       </form>
 
-      {/* POPUP DE SUCESSO */}
       {showSuccess && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md text-center shadow-lg">
             <h2 className="text-2xl font-bold mb-4">Compra Realizada!</h2>
-            <p className="mb-6">Obrigado pela sua compra. Em breve você receberá a confirmação por e-mail.</p>
+            <p className="mb-6">
+              Obrigado pela sua compra. Em breve você receberá a confirmação por
+              e-mail.
+            </p>
             <button
               onClick={() => navigate("/")}
               className="
@@ -278,7 +368,6 @@ export function Checkout() {
   );
 }
 
-// formatação de validade MM/AA
 function formatExpiry(v: string) {
   const d = v.replace(/\D/g, "").slice(0, 4);
   return d.length >= 3 ? d.replace(/(\d{2})(\d{1,2})/, "$1/$2") : d;

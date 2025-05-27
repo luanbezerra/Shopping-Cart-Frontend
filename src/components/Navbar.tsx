@@ -1,6 +1,8 @@
-// src/components/Navbar.tsx
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useShoppingCart, type ShoppingCartContextType } from "../context/ShoppingCartContext";
+import {
+  useShoppingCart,
+  type ShoppingCartContextType,
+} from "../context/ShoppingCartContext";
 import { ShoppingCart } from "lucide-react";
 import rawItems from "../data/products.json";
 
@@ -64,15 +66,13 @@ export function Navbar({
 
   return (
     <nav className="sticky top-0 inset-x-0 z-50 bg-white shadow">
-      {/* top row */}
       <div className="container mx-auto px-4 flex items-center justify-between py-3">
-        <Link to="/" className="text-2xl font-bold text-black">
-          ZaraLab
+        <Link to="/" className="flex items-center">
+          <img src="/vishop.png" alt="Vishop Logo" className="h-6 w-auto" />
         </Link>
 
         {isStorePage && (
           <div className="flex-1 flex items-center space-x-3 mx-4">
-            {/* Search */}
             <input
               type="text"
               value={searchTerm}
@@ -81,11 +81,8 @@ export function Navbar({
               className="flex-1 px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-black"
             />
 
-            {/* Section popover */}
             <div className="relative group">
-              <button
-                className="px-4 py-2 border border-gray-300 rounded-full text-sm hover:bg-gray-100 transition"
-              >
+              <button className="px-4 py-2 border border-gray-300 rounded-full text-sm hover:bg-gray-100 transition">
                 {sectionFilter || "All Sections"}
               </button>
               <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute right-0 top-full mt-1 w-40 bg-white shadow-lg rounded-lg overflow-hidden transition-opacity duration-200 ease-in-out z-10">
@@ -109,7 +106,6 @@ export function Navbar({
           </div>
         )}
 
-        {/* cart button + preview */}
         <div className="relative group">
           <button
             onClick={() => navigate("/cart")}
@@ -160,7 +156,9 @@ export function Navbar({
                 ))}
               </ul>
               <div className="border-t border-gray-200 mt-4 pt-4 flex items-center justify-between">
-                <span className="font-semibold">Total: ${total.toFixed(2)}</span>
+                <span className="font-semibold">
+                  Total: ${total.toFixed(2)}
+                </span>
                 <button
                   onClick={() => navigate("/cart")}
                   className="px-4 py-2 bg-black text-white rounded-full text-sm"
@@ -173,7 +171,6 @@ export function Navbar({
         </div>
       </div>
 
-      {/* bottom row: terms */}
       {isStorePage && (
         <div className="border-t border-gray-200">
           <div className="container mx-auto px-4 overflow-x-auto">

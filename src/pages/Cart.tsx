@@ -1,4 +1,3 @@
-// src/pages/Cart.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useShoppingCart } from "../context/ShoppingCartContext";
@@ -6,15 +5,10 @@ import rawItems from "../data/products.json";
 
 export function Cart() {
   const navigate = useNavigate();
-  const {
-    cartItems,
-    increaseCartQtd,
-    decreaseCartQtd,
-    removeFromCart,
-  } = useShoppingCart();
+  const { cartItems, increaseCartQtd, decreaseCartQtd, removeFromCart } =
+    useShoppingCart();
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // Mapa SKU → detalhes do produto
   const productsMap = new Map(
     rawItems.map((item) => [
       item.sku,
@@ -22,7 +16,6 @@ export function Cart() {
     ])
   );
 
-  // Monta lista de itens com totais
   const items = cartItems.map(({ sku, quantity }) => {
     const p = productsMap.get(sku)!;
     return {
@@ -42,7 +35,6 @@ export function Cart() {
   }
 
   function handleClose() {
-    // esvazia o carrinho
     cartItems.forEach((item) => removeFromCart(item.sku));
     setShowSuccess(false);
     navigate("/");
@@ -50,7 +42,6 @@ export function Cart() {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      {/* Cabeçalho */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold">Your Cart</h1>
         <button
@@ -70,7 +61,6 @@ export function Cart() {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* Tabela de itens */}
         <div className="flex-1 overflow-x-auto">
           <table className="table-fixed w-full text-left">
             <thead>
@@ -125,7 +115,6 @@ export function Cart() {
           </table>
         </div>
 
-        {/* Order Summary (sticky) */}
         <div
           className="
             w-full lg:w-1/3
@@ -148,7 +137,9 @@ export function Cart() {
           <hr className="border-gray-200 mb-4" />
           <div className="flex justify-between mb-6">
             <span className="text-lg font-semibold">Total</span>
-            <span className="text-lg font-semibold">${subtotal.toFixed(2)}</span>
+            <span className="text-lg font-semibold">
+              ${subtotal.toFixed(2)}
+            </span>
           </div>
 
           <button
@@ -167,13 +158,13 @@ export function Cart() {
         </div>
       </div>
 
-      {/* Pop-up de sucesso (sem overlay escuro) */}
       {showSuccess && (
         <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
           <div className="bg-white rounded-lg p-6 w-full max-w-md text-center shadow-2xl pointer-events-auto">
             <h2 className="text-2xl font-bold mb-4">Purchase Successful!</h2>
             <p className="mb-6">
-              Thank you for your purchase. You will receive confirmation by email shortly.
+              Thank you for your purchase. You will receive confirmation by
+              email shortly.
             </p>
             <button
               onClick={handleClose}
