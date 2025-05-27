@@ -12,7 +12,7 @@ Uma aplicação de e-commerce feita com React, TypeScript, Vite e Tailwind CSS.
 ### Passos
 
 ```bash
-git clone https://github.com/SEU_USUARIO/vishop.git
+git clone
 cd Shopping-Cart-Frontend
 pnpm install
 pnpm dev
